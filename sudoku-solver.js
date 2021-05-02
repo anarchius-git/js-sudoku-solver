@@ -78,41 +78,184 @@ function solveSudoku(toSolveGrid){
 	return false; // We failed because we could not find a single value that works for the unsolved cell we were trying to solve for
 }
 
+function pickStandardBoard(stdBoardID){
+	// This board picks a standard set of Sudoku vlaues and loads it onto the UI
+	// The solve function will then have to read the UI and continue
+	// If you use a non-standard value, i.e., -1, this function will return an empty board
+	switch (stdBoardID){
+		case 1:
+			returnGrid = [
+				[ 0, 7, 0, 0, 2, 0, 0, 0, 0 ],
+				[ 0, 1, 0, 8, 6, 5, 0, 2, 4 ],
+				[ 8, 0, 0, 0, 0, 3, 9, 6, 0 ],
+				[ 0, 0, 0, 5, 9, 4, 3, 1, 6 ],
+				[ 0, 9, 0, 0, 3, 0, 0, 4, 0 ],
+				[ 4, 3, 5, 6, 1, 8, 0, 0, 0 ],
+				[ 0, 8, 3, 7, 0, 0, 0, 0, 2 ],
+				[ 2, 4, 0, 1, 5, 9, 0, 3, 0 ],
+				[ 0, 0, 0, 0, 8, 0, 0, 7, 0 ]
+			];
+		break;
+		case 2:
+			returnGrid = [
+				[ 6, 0, 9, 5, 0, 0, 0, 4, 0 ],
+				[ 1, 0, 0, 0, 4, 0, 0, 0, 8 ],
+				[ 0, 0, 0, 3, 0, 9, 0, 0, 5 ],
+				[ 0, 0, 0, 1, 0, 0, 0, 5, 7 ],
+				[ 7, 0, 3, 4, 0, 5, 2, 0, 9 ],
+				[ 5, 4, 0, 0, 0, 6, 0, 0, 0 ],
+				[ 8, 0, 0, 2, 0, 3, 0, 0, 0 ],
+				[ 3, 0, 0, 0, 6, 0, 0, 0, 2 ],
+				[ 0, 5, 0, 0, 0, 1, 7, 0, 6 ]
+			];
+		break;
+		case 3:
+			returnGrid = [
+				[ 0, 5, 0, 0, 0, 0, 4, 9, 2 ],
+				[ 0, 0, 0, 7, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 0, 9, 0, 0, 6, 3, 0 ],
+				[ 9, 0, 0, 0, 0, 6, 0, 5, 3 ],
+				[ 0, 0, 3, 1, 0, 9, 2, 0, 0 ],
+				[ 1, 7, 0, 5, 0, 0, 0, 0, 9 ],
+				[ 0, 2, 5, 0, 0, 1, 0, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 7, 0, 0, 0 ],
+				[ 3, 9, 4, 0, 0, 0, 0, 2, 0 ]
+			];
+		break;
+		case 4:
+			returnGrid = [
+				[ 0, 7, 0, 5, 9, 0, 0, 0, 0 ],
+				[ 0, 0, 4, 1, 0, 0, 0, 9, 0 ],
+				[ 0, 0, 0, 0, 7, 0, 2, 0, 8 ],
+				[ 6, 0, 0, 3, 8, 0, 0, 4, 0 ],
+				[ 9, 0, 2, 0, 0, 0, 1, 0, 3 ],
+				[ 0, 3, 0, 0, 1, 7, 0, 0, 2 ],
+				[ 8, 0, 1, 0, 6, 0, 0, 0, 0 ],
+				[ 0, 2, 0, 0, 0, 1, 4, 0, 0 ],
+				[ 0, 0, 0, 0, 5, 9, 0, 2, 0 ]
+			];
+		break;
+		case 5:
+			returnGrid = [
+				[ 0, 0, 0, 4, 0, 7, 0, 0, 0 ],
+				[ 0, 0, 3, 0, 0, 0, 2, 0, 0 ],
+				[ 4, 2, 0, 1, 9, 0, 0, 0, 0 ],
+				[ 3, 0, 0, 0, 8, 0, 7, 0, 5 ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 9, 0, 6, 0, 5, 0, 0, 0, 3 ],
+				[ 0, 0, 0, 0, 4, 5, 0, 1, 9 ],
+				[ 0, 0, 8, 0, 0, 0, 4, 0, 0 ],
+				[ 0, 0, 0, 7, 0, 6, 0, 0, 0 ]
+			];
+		break;
+		case 6:
+			returnGrid = [
+				[ 3, 0, 5, 6, 0, 2, 0, 9, 0 ],
+				[ 0, 9, 7, 0, 0, 0, 6, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 3 ],
+				[ 8, 0, 0, 0, 0, 7, 0, 1, 0 ],
+				[ 0, 1, 2, 0, 0, 0, 3, 4, 0 ],
+				[ 0, 4, 0, 3, 0, 0, 0, 0, 2 ],
+				[ 9, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 8, 0, 0, 0, 4, 6, 0 ],
+				[ 0, 6, 0, 5, 0, 8, 2, 0, 1 ]
+			];
+		break;
+		case 7:
+			returnGrid = [
+				[ 0, 1, 0, 2, 0, 0, 4, 9, 0 ],
+				[ 9, 5, 4, 0, 6, 0, 0, 0, 0 ],
+				[ 2, 0, 0, 9, 0, 0, 0, 0, 0 ],
+				[ 7, 0, 9, 0, 1, 0, 0, 8, 4 ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 6, 8, 0, 0, 2, 0, 9, 0, 3 ],
+				[ 0, 0, 0, 0, 0, 2, 0, 0, 8 ],
+				[ 0, 0, 0, 0, 4, 0, 3, 7, 9 ],
+				[ 0, 7, 1, 0, 0, 8, 0, 5, 0 ]
+			];
+		break;
+		case 8:
+			returnGrid = [
+				[ 0, 9, 0, 0, 0, 0, 8, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 9, 6, 7, 4 ],
+				[ 0, 0, 7, 0, 4, 0, 0, 0, 3 ],
+				[ 0, 4, 0, 0, 0, 2, 0, 5, 6 ],
+				[ 0, 0, 6, 0, 5, 0, 7, 0, 0 ],
+				[ 1, 5, 0, 6, 0, 0, 0, 8, 0 ],
+				[ 6, 0, 0, 0, 9, 0, 1, 0, 0 ],
+				[ 9, 7, 3, 2, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 1, 0, 0, 0, 0, 3, 0 ]
+			];
+		break;
+		case 9:
+			returnGrid = [
+				[ 1, 0, 2, 0, 5, 8, 4, 0, 0 ],
+				[ 8, 0, 0, 1, 0, 0, 0, 0, 2 ],
+				[ 0, 5, 0, 0, 0, 0, 0, 1, 0 ],
+				[ 0, 8, 0, 0, 1, 4, 0, 0, 0 ],
+				[ 6, 0, 0, 0, 9, 0, 0, 0, 1 ],
+				[ 0, 0, 0, 7, 6, 0, 0, 8, 0 ],
+				[ 0, 4, 0, 0, 0, 0, 0, 7, 0 ],
+				[ 3, 0, 0, 0, 0, 1, 0, 0, 5 ],
+				[ 0, 0, 1, 4, 2, 0, 8, 0, 6 ]
+			];
+		break;
+		case 10:
+			returnGrid = [
+				[ 0, 0, 0, 0, 0, 0, 3, 0, 6 ],
+				[ 0, 0, 9, 0, 8, 0, 0, 5, 0 ],
+				[ 6, 0, 0, 4, 2, 0, 9, 0, 0 ],
+				[ 0, 4, 0, 2, 0, 0, 0, 0, 0 ],
+				[ 3, 1, 0, 0, 0, 0, 0, 2, 5 ],
+				[ 0, 0, 0, 0, 0, 1, 0, 8, 0 ],
+				[ 0, 0, 1, 0, 6, 9, 0, 0, 2 ],
+				[ 0, 8, 0, 0, 4, 0, 6, 0, 0 ],
+				[ 9, 0, 3, 0, 0, 0, 0, 0, 0 ]
+			];
+		break;
+		default: // This can also be used as a hack to return an empty board
+			returnGrid = [
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+			];
+
+	}
+	return returnGrid;
+}
+
 ///////////////////////////////////////////////////////
-// Callable Functions
+// Functions Callable from the UI
+
+function loadBoard(boardID){
+	// This picks a board and loads it onto the UI
+	var tempGrid = pickStandardBoard(boardID);
+	updateBoardValues(tempGrid);
+	updateBoardColors();
+}
 
 function solveBoard(){
 	// The main solving function
-	// alert("hello");
-	sudokuGrid = [
-		[ 3, 0, 6, 5, 0, 8, 4, 0, 0 ],
-		[ 5, 2, 0, 0, 0, 0, 0, 0, 0 ],
-		[ 0, 8, 7, 0, 0, 0, 0, 3, 1 ],
-		[ 0, 0, 3, 0, 1, 0, 0, 8, 0 ],
-		[ 9, 0, 0, 8, 6, 3, 0, 0, 5 ],
-		[ 0, 5, 0, 0, 9, 0, 6, 0, 0 ],
-		[ 1, 3, 0, 0, 0, 0, 2, 5, 0 ],
-		[ 0, 0, 0, 0, 0, 0, 0, 7, 4 ],
-		[ 0, 0, 5, 2, 0, 6, 3, 0, 0 ] 
-	];
+	// It starts by reading the values from the UI board. The runs the recursive solve function
+	sudokuGrid = readBoardValues();
 	console.table(sudokuGrid);
-	setBoardColors(sudokuGrid);
-	updateBoardValues(sudokuGrid);
 
 	if(solveSudoku(sudokuGrid)){
 		// Recursion successfully completed
 		console.table(sudokuGrid);
 		updateBoardValues(sudokuGrid);
+		// Note we are not updating board colors here, because the calculation results are shown in grey
 	} else {
 		console.log("No Answer");
+		alert("No Answer found");
 	}
 
-	//for(var i = 0; i < 9; i++){
-	//	for(var j = 0; j < 9; j++){
-	//		console.log(isValid(sudokuGrid, i, j, 1));
-	//	}
-	//}
-	
 }
 
 ///////////////////////////////////////////////////////
@@ -131,41 +274,72 @@ function drawBoard(){
 			tableText.classList.add("text-center");
 			var sNumber = document.createElement("span");
 			sNumber.setAttribute("id", "cell-" + i + "-" + j);
-			sNumber.classList.add("badge");
-			sNumber.classList.add("badge-secondary");
-			sNumber.innerText = "0";
 			tableText.appendChild(sNumber);
 			tableCell.appendChild(tableText);
 			tableRow.appendChild(tableCell);
 		}
+		// Add a last cell with the edit icon to edit the row directly in the UI
+		var editCell = document.createElement("td");
+		editCell.classList.add("align-middle");
+		editCell.classList.add("table-active");
+		editCell.classList.add("edit-row");
+		editCell.innerHTML += "<i class='fas fa-edit fa-sm'></i>"
+		editCell.setAttribute("rowID",i);
+		editCell.addEventListener('click',function(){editRowUI(this.getAttribute("rowID"))}); //send the ID of the row that needs to be edited
+		tableRow.appendChild(editCell);
 		tableRef.appendChild(tableRow);
 	}
+	// Initialize with an empty board
+	updateBoardValues(pickStandardBoard(-1)); // gets a default grid (all zeros) and updates the board values
+	updateBoardColors();
 }
 
-function setBoardColors(currentGrid){
-	// Set the colors of the background differently for input values
-	for(var i = 0; i < 9; i++){
-		for(var j = 0; j < 9; j++){
-			if(currentGrid[i][j] != 0){
-				var cellID = document.getElementById("cell-" + i + "-" + j);
-				cellID.classList.remove("badge-secondary");
-				cellID.classList.add("badge-danger");
-			}
-		}
-	}
+function editRowUI(rowRefID){
+	console.log(rowRefID);
 }
 
 function updateBoardValues(currentGrid){
-	// Set the values of the board based on the grid
+	// Update all the values on the board from the provide grid
 	for(var i = 0; i < 9; i++){
 		for(var j = 0; j < 9; j++){
-			if(currentGrid[i][j] != 0){
-				var cellID = document.getElementById("cell-" + i + "-" + j);
-				cellID.innerText = currentGrid[i][j];
+			var cellID = document.getElementById("cell-" + i + "-" + j);
+			cellID.innerText = currentGrid[i][j];
+		}
+	}
+}
+
+function updateBoardColors(){
+	// Set the colors of the badge based on the value in each cell
+	for(var i = 0; i < 9; i++){
+		for(var j = 0; j < 9; j++){
+			var cellID = document.getElementById("cell-" + i + "-" + j);
+			var cellValue = parseInt(cellID.innerText);
+			cellID.className = ""; // Clear the classes
+			if(cellValue != 0){
+				cellID.classList.add("badge");
+				cellID.classList.add("badge-primary");
+			} else {
+				cellID.classList.add("badge");
+				cellID.classList.add("badge-light");
 			}
 		}
 	}
 }
+
+function readBoardValues(){
+	// Read the values on the board and store it into a grid
+	// return the grid
+	//var returnGrid = [];
+	var returnGrid = pickStandardBoard(-1); //using the hack to get an empty board
+	for(var i = 0; i < 9; i++){
+		for(var j = 0; j < 9; j++){
+			var cellID = document.getElementById("cell-" + i + "-" + j);
+			returnGrid[i][j] = parseInt(cellID.innerText);
+		}
+	}
+	return returnGrid;
+}
+
 
 // https://www.sitepoint.com/delay-sleep-pause-wait/
 function sleep(ms) {

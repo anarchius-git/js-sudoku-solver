@@ -9,6 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="style.css">
 	<script src="sudoku-solver.js"></script>
 </head>
 <body onload="drawBoard();">
@@ -20,26 +21,50 @@
 <br/>
 
 <div class="container">
-<!--	<div class="row">
-		<div class="col-sm-3"><h2>Information</h2></div>
-		<div class="col-sm-6" style="text-align:center"></div>
-		<div class="col-sm-3"></div>
-	</div>
-	<br/><br/>-->
 	<div class="row">
-		<div class="table-responsive-sm>">
-			<table id="sudoku-board" class="table table-bordered">
-			</table>
+		<div class="col-sm-6">
+			<div class="table-responsive-sm>">
+				<table id="sudoku-board" class="table table-bordered">
+				</table>
+			</div>
 		</div>
+		<div class="col-sm-1">&nbsp;</div>
+		<div class="col-sm-4">
+			<div class="d-grid gap-2 mx-auto">
+				<p>To try the sudoku solver, you could start with one of the available sudoku boards.</p>
+				<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Pick an Existing Sudoku Board
+					</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+						<button class="dropdown-item" type="button" onclick="loadBoard(1);">Simple • #1</button>
+						<button class="dropdown-item" type="button" onclick="loadBoard(2);">Easy •• #125</button>
+						<button class="dropdown-item" type="button" onclick="loadBoard(3);">Medium ••• #172</button>
+						<button class="dropdown-item" type="button" onclick="loadBoard(4);">Medium ••• #300</button>
+						<button class="dropdown-item" type="button" onclick="loadBoard(5);">Medium •••• #375</button>
+						<button class="dropdown-item" type="button" onclick="loadBoard(6);">Medium •••• #490</button>
+						<button class="dropdown-item" type="button" onclick="loadBoard(7);">Difficult ••••• #521</button>
+						<button class="dropdown-item" type="button" onclick="loadBoard(8);">Difficult ••••• #540</button>
+						<button class="dropdown-item" type="button" onclick="loadBoard(9);">Difficult ••••• #555</button>
+						<button class="dropdown-item" type="button" onclick="loadBoard(10);">Difficult ••••• #583</button>
+					</div>
+				</div>
+				<br/>
+				<p>Or you could try editing the board itself</p>
+				<p>Once you are done, you can try to solve the board by clicking the button below.</p>
+				<button type="button" class="btn btn-primary" onclick="solveBoard();">Solve the Sudoku Board</button>
+				<br/><br/>
+				<p>If something does not work, just try clearing the board.</p>
+				<button type="button" class="btn btn-danger" onclick="loadBoard(-1);">Clear the Sudoku Board</button>
+			</div>
+		</div>
+		<div class="col-sm-1">&nbsp;</div>
 	</div>
 </div> <!-- End container for the players and arena-->
 <br/>
 
 <div id="game-controls" class="container bg-light">
 	<div class="row">
-		<div class="col-sm-4" style="text-align:center"><button type="button" class="btn btn-primary" onclick="";>Load</button></div>
-		<div class="col-sm-4" style="text-align:center"><button type="button" class="btn btn-primary" onclick="solveBoard();">Solve</button></div>
-		<div class="col-sm-4" style="text-align:center"><button type="button" class="btn btn-primary" onclick="alert('clear board');">Clear</button></div>
 	</div>
 </div> <!-- End container for game controls
 
