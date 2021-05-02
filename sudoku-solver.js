@@ -285,6 +285,7 @@ function drawBoard(){
 		editCell.classList.add("edit-row");
 		editCell.innerHTML += "<i class='fas fa-edit fa-sm'></i>"
 		editCell.setAttribute("rowID",i);
+		editCell.setAttribute("id","edit-row-"+i);
 		editCell.addEventListener('click',function(){editRowUI(this.getAttribute("rowID"))}); //send the ID of the row that needs to be edited
 		tableRow.appendChild(editCell);
 		tableRef.appendChild(tableRow);
@@ -295,7 +296,44 @@ function drawBoard(){
 }
 
 function editRowUI(rowRefID){
-	console.log(rowRefID);
+	//console.log(rowRefID);
+	// First read all the numbers from the passed row id and create a string that can be edited
+	rowString = "";
+	for(var j=0; j < 9; j++){rowString += readCellValue(rowRefID, j)}
+	
+	// Then load the string. Except for when it is all zeros, make input easier by starting with an empty string
+	var editRowTextbox = document.getElementById("edit-row-input");
+	if(rowString == "000000000") {
+		editRowTextbox.value = $('#edit-row-input').masked("");
+	} else {
+		editRowTextbox.value = $('#edit-row-input').masked(rowString);
+	}
+	
+	// Save the row id in a hidden input
+	var hiddenRowID = document.getElementById("current-row-id");
+	hiddenRowID.value = rowRefID;
+	//console.log(rowString);
+	// jQuery to show the modal
+	$("#editRowModal").modal("show");
+}
+
+function saveRowUI(){
+	// The "Save Row" button clicked on the edit row modal
+	var cleanValue = "";
+	cleanValue = $('#edit-row-input').cleanVal();
+	// Pad zeros at the end in case the input is not complete
+	while(cleanValue.length < 9){cleanValue += "0"} 
+
+	// Get the Row Number from the hidden field
+	var hiddenRowID = document.getElementById("current-row-id");
+	var rowRefID = hiddenRowID.value;
+	// Hide the Moday
+	$("#editRowModal").modal("hide");
+	// Update the Sudoku UI
+	for(var j = 0; j < 9; j++){
+		updateCellValue(rowRefID, j, cleanValue.charAt(j));
+	}
+	updateBoardColors();
 }
 
 function updateBoardValues(currentGrid){
@@ -308,6 +346,12 @@ function updateBoardValues(currentGrid){
 	}
 }
 
+function updateCellValue(rowID, colID, cellValue){
+	// Update just a single cell in the board
+	var cellID = document.getElementById("cell-" + rowID + "-" + colID);
+	cellID.innerText = cellValue;
+}
+
 function updateBoardColors(){
 	// Set the colors of the badge based on the value in each cell
 	for(var i = 0; i < 9; i++){
@@ -315,10 +359,23 @@ function updateBoardColors(){
 			var cellID = document.getElementById("cell-" + i + "-" + j);
 			var cellValue = parseInt(cellID.innerText);
 			cellID.className = ""; // Clear the classes
+			// Decide on the color for non zero values
+			// Pick the board values and knockoff the current value
+			var currentBoard = readBoardValues();
+			currentBoard[i][j] = 0; // If the current board did not have the value, would the current value be valid?
 			if(cellValue != 0){
-				cellID.classList.add("badge");
-				cellID.classList.add("badge-primary");
-			} else {
+				if(isValid(currentBoard, i, j, cellValue)){
+					// valid number, so mark it primary
+					cellID.classList.add("badge");
+					cellID.classList.add("badge-primary");
+				} else {
+					// invalid number, mark it as error
+					cellID.classList.add("badge");
+					cellID.classList.add("badge-danger");
+				}
+			}
+			// Cell value is 0 so keep it light
+			if (cellValue == 0){
 				cellID.classList.add("badge");
 				cellID.classList.add("badge-light");
 			}
@@ -329,7 +386,6 @@ function updateBoardColors(){
 function readBoardValues(){
 	// Read the values on the board and store it into a grid
 	// return the grid
-	//var returnGrid = [];
 	var returnGrid = pickStandardBoard(-1); //using the hack to get an empty board
 	for(var i = 0; i < 9; i++){
 		for(var j = 0; j < 9; j++){
@@ -340,6 +396,13 @@ function readBoardValues(){
 	return returnGrid;
 }
 
+function readCellValue(rowID, colID){
+	// Read the values on the board for a single cell and return it
+	var returnValue = 0;
+	var cellID = document.getElementById("cell-" + rowID + "-" + colID);
+	returnValue = parseInt(cellID.innerText);
+	return returnValue;
+}
 
 // https://www.sitepoint.com/delay-sleep-pause-wait/
 function sleep(ms) {

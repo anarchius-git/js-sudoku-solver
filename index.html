@@ -11,6 +11,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="style.css">
 	<script src="sudoku-solver.js"></script>
+	<!-- jquery input mask -->
+	<script src="jquery-mask/jquery.mask.js"></script>
 </head>
 <body onload="drawBoard();">
 
@@ -56,17 +58,51 @@
 				<br/><br/>
 				<p>If something does not work, just try clearing the board.</p>
 				<button type="button" class="btn btn-danger" onclick="loadBoard(-1);">Clear the Sudoku Board</button>
+				<!--<br/><br/>
+				<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#editRowModal">Open Modal</button>-->
 			</div>
 		</div>
 		<div class="col-sm-1">&nbsp;</div>
-	</div>
-</div> <!-- End container for the players and arena-->
+
+		<!-- Start Edit Row Modal -->
+		<div class="modal fade" id="editRowModal" role="dialog">
+			<div class="modal-dialog">
+			
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Edit Sudoku Row</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<label for="edit-row-input" class="form-label">Edit or Enter Row numbers - 0 for Unknown Numbers.</label>
+						<input class="form-control form-control-lg" type="text" id="edit-row-input" name="field-name" placeholder="000 000 000" />
+						<input type="hidden" id="current-row-id" name="current-row-id" value="">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" onclick="saveRowUI();">Save Row</button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!-- End Edit Row Modal -->
+
+	</div> <!-- End row div -->
+</div> <!-- End container for the main area -->
 <br/>
 
-<div id="game-controls" class="container bg-light">
-	<div class="row">
-	</div>
-</div> <!-- End container for game controls
+<script>
+$(document).ready(function(){
+	// Initialize the mask function
+	$('#edit-row-input').mask('000 000 000');
+	// Set the focus on the text box when the modal is shown
+	$('#editRowModal').on('shown.bs.modal', function() {
+		$('#edit-row-input').focus();
+	})
+});
+</script>
 
 </body>
 </html>
